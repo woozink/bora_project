@@ -2,23 +2,25 @@ package com.ssafy.bora.controller.Auth;
 
 import com.ssafy.bora.service.auth.AuthService;
 import com.ssafy.bora.util.CookieUtils;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.ssafy.bora.dto.UserExtraInfoReq;
+import com.ssafy.bora.dto.user.UserExtraInfoReq;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController //json 형태로 반환을 위해서
-@RequestMapping("/api/auth") // 각각의 value를 설정 안하기위해
+@RequestMapping("/auth") // 각각의 value를 설정 안하기위해
 @RequiredArgsConstructor // Lombok, 생성자 주입을 임의 설정
 @Slf4j//Simple Logging Facade for Java
 public class AuthController {
     // 생성자 주입
     private final AuthService authService;
 
+    @ApiOperation(value = "토큰 재발급")
     @GetMapping //토큰 재발급 메서드
     public String reissueAccessToken(HttpServletRequest request, @RequestHeader("Authorization") String oldAccessToken) {
         oldAccessToken = oldAccessToken.substring(7); // 헤더부분(토큰 정보)
@@ -51,13 +53,11 @@ public class AuthController {
 
     @GetMapping("/users")
     public void getUsers(){
-//      log.info(SecurityUtil.getCurrentUser().toString());
         log.info("AuthController /users GET 성공");
     }
 
 
     @PutMapping("/users")
-//    @PreAuthorize("hasRole('ROLE_GUEST')")
     public ResponseEntity<?> createUserExtraInfo(@RequestBody UserExtraInfoReq userExtraInfoReq){
         Map<String, String> authInfo = CookieUtils.getCurrentUser();
         String accessToken = authService.createUserExtraInfo(userExtraInfoReq, authInfo);

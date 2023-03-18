@@ -1,5 +1,6 @@
 package com.ssafy.bora.entity;
 
+import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -32,12 +33,14 @@ public class Broadcast implements Serializable {
     @Column(name = "end_time")
     private LocalDateTime endBroad;
 
+    @Column(name="broadcast_img")
+    private String broadcastImg;
+
     @Column(name = "max_viewer")
     @ColumnDefault("0")
     private int maxViewer;
 
     @Column(name = "is_on_time")
-    @ColumnDefault("0")
     private boolean isOnTime;
 
     private String sessionId;

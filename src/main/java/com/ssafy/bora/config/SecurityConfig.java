@@ -33,8 +33,6 @@ public class SecurityConfig {
 
     private final IUserRepository userRepository;
 
-
-
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
         return new OAuth2LoginSuccessHandler(iPrivacyRepository, jwtProvider, userRepository);
@@ -92,7 +90,6 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-
 
         CorsConfiguration config = new CorsConfiguration();
 
